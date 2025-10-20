@@ -9,6 +9,7 @@ load_dotenv()
 
 PORT=os.getenv('PORT')
 SERVER_URL=os.getenv('SERVER_URL')
+PLAYER_KEY=None
 if PORT:
     URL=f"http://{SERVER_URL}:{PORT}"
 else:
@@ -20,9 +21,13 @@ class SimeisError(Exception):
 def log(value):
         print(f"[{time.strftime("%H:%M:%S", time.localtime())}] {value}")
 
-def get(path, key=None, **qry):
-        if key:
-            qry["key"] = key
+def set_player_key(player_key):
+    global PLAYER_KEY
+    PLAYER_KEY = player_key
+
+def get(path, **qry):
+        if PLAYER_KEY:
+            qry["key"] = PLAYER_KEY
         tail = ""
         if len(qry) > 0:
             tail += "?"

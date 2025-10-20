@@ -10,6 +10,7 @@ if __name__ == "__main__":
     for thread in game.threads:
         game_thread.add_thread(thread)
     game_thread.start_threads()
+    game.buy_ship()
 
 
 while True:

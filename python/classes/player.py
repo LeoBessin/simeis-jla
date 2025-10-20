@@ -1,4 +1,5 @@
-from core.utils import create_json, get
+from core.utils import create_json, get, set_player_key
+
 
 class Player:
     def __init__(self, id=None, key=None, name=None, datalist=None):
@@ -20,6 +21,7 @@ class Player:
             self.costs = 0
             self.ships = []
             self.stations = {}
+        set_player_key(self.key)
         self.update_json()
 
     def get_status(self):
@@ -37,7 +39,7 @@ class Player:
             )
 
     def update_json(self):
-        player_data = get(f"/player/{self.id}", key=self.key)
+        player_data = get(f"/player/{self.id}")
         self.money = player_data["money"]
         self.costs = player_data["costs"]
         self.ships = player_data["ships"]
