@@ -8,7 +8,10 @@ load_dotenv()
 
 PORT=os.getenv('PORT')
 SERVER_URL=os.getenv('SERVER_URL')
-URL=f"http://{SERVER_URL}:{PORT}"
+if PORT:
+    URL=f"http://{SERVER_URL}:{PORT}"
+else:
+    URL=f"http://{SERVER_URL}"
 
 class SimeisError(Exception):
     pass

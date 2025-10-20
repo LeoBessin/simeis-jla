@@ -4,5 +4,5 @@ result
 *.zip
 .~lock.*.ods#
 scores.json
-.env
+python/.env
 python/.idea
