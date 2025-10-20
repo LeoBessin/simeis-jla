@@ -7,3 +7,4 @@ scores.json
 python/.env
 python/.idea
 python/data
+build
