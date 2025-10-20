@@ -1,3 +1,4 @@
+import time
 import urllib
 import urllib.request
 import json
@@ -11,10 +12,13 @@ SERVER_URL=os.getenv('SERVER_URL')
 if PORT:
     URL=f"http://{SERVER_URL}:{PORT}"
 else:
-    URL=f"http://{SERVER_URL}"
+    URL=SERVER_URL
 
 class SimeisError(Exception):
     pass
+
+def log(value):
+            print(f"[{time.strftime("%H:%M:%S", time.localtime())}] {value}")
 
 def get(path, key=None, **qry):
         if key:

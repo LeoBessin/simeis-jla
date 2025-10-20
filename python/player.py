@@ -1,6 +1,5 @@
 from utils import create_json, get
 
-
 class Player:
     def __init__(self, id=None, key=None, name=None, datalist=None):
         if datalist is not None:
@@ -25,7 +24,7 @@ class Player:
 
     def get_status(self):
         return (
-                "Player:\n"
+                "Player (\n"
                 f"  id:{self.id}\n"
                 f"  key:{self.key}\n"
                 f"  name:{self.name}\n"
@@ -34,6 +33,7 @@ class Player:
                 f"  costs:{self.costs}\n"
                 f"  ships:{self.ships}\n"
                 f"  stations:{self.stations}\n"
+                ")"
             )
 
     def update_json(self):
