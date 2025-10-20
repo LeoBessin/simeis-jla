@@ -47,6 +47,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
@@ -73,3 +76,59 @@ jobs:
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
+
+    - name: Prepare artifacts
+      shell: bash
+      run: |
+        mkdir -p artifacts
+        if [ "${{ matrix.os }}" = "windows-latest" ]; then
+          cp target/release/simeis-server.exe artifacts/simeis-server-windows-${{ matrix.c_compiler }}.exe || true
+        else
+          cp target/release/simeis-server artifacts/simeis-server-linux-${{ matrix.c_compiler }} || true
+        fi
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: simeis-server-${{ matrix.os }}-${{ matrix.c_compiler }}
+        path: artifacts/*
+        if-no-files-found: warn
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: release-artifacts
+
+    - name: Generate release tag
+      id: tag
+      run: |
+        echo "release_tag=v0.1.0-$(date +'%Y%m%d-%H%M%S')-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        name: Release ${{ steps.tag.outputs.release_tag }}
+        body: |
+          Automated release from commit ${{ github.sha }}
+          
+          **Changes:**
+          ${{ github.event.head_commit.message }}
+          
+          **Built on:** ${{ github.event.head_commit.timestamp }}
+          **Author:** ${{ github.event.head_commit.author.name }}
+        files: release-artifacts/**/*
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

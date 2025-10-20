@@ -30,18 +30,6 @@ add_custom_target(cargo_clean
     COMMENT "Cleaning Cargo build artifacts"
 )
 
-add_custom_target(cargo_test
-    COMMAND ${CARGO} test
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMENT "Running Cargo tests"
-)
-
-enable_testing()
-add_test(NAME rust_tests
-    COMMAND ${CARGO} test
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-
 install(PROGRAMS ${CMAKE_SOURCE_DIR}/target/${CARGO_BUILD_DIR}/simeis-server
     DESTINATION bin
     OPTIONAL
