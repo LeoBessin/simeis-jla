@@ -3,4 +3,3 @@ FROM rust:${RUST_VERSION}-slim-bullseye
 WORKDIR /
 COPY . .
 RUN cargo build
-RUN cargo run

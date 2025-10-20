@@ -13,7 +13,9 @@ URL=f"http://{SERVER_URL}:{PORT}"
 class SimeisError(Exception):
     pass
 
-def get(path, **qry):
+def get(path, key=None, **qry):
+        if key:
+            qry["key"] = key
         tail = ""
         if len(qry) > 0:
             tail += "?"
