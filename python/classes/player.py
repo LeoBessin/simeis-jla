@@ -1,4 +1,4 @@
-from utils import create_json, get
+from core.utils import create_json, get
 
 class Player:
     def __init__(self, id=None, key=None, name=None, datalist=None):

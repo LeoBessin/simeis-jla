@@ -1,7 +1,7 @@
 import sys
 
-from game import Game
-from game_threads import GameThread
+from classes.game import Game
+from classes.game_threads import GameThread
 
 if __name__ == "__main__":
     name = sys.argv[1]

@@ -1,7 +1,7 @@
 import time
 
-from player import Player
-from utils import get, read_json, log
+from classes.player import Player
+from core.utils import get, read_json, log
 
 
 class Game:

@@ -18,7 +18,7 @@ class SimeisError(Exception):
     pass
 
 def log(value):
-            print(f"[{time.strftime("%H:%M:%S", time.localtime())}] {value}")
+        print(f"[{time.strftime("%H:%M:%S", time.localtime())}] {value}")
 
 def get(path, key=None, **qry):
         if key:
