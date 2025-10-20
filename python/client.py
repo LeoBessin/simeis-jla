@@ -1,8 +1,13 @@
 import urllib.request
 import json
+import os
+from dotenv import load_dotenv
 
-PORT=8080
-URL=f"http://0.0.0.0:{PORT}"
+load_dotenv()
+
+PORT=os.getenv('PORT')
+SERVER_URL=os.getenv('SERVER_URL')
+URL=f"http://{SERVER_URL}:{PORT}"
 
 def get(path, **qry):
         tail = ""
