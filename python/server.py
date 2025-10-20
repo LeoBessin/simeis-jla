@@ -8,4 +8,4 @@ if __name__ == "__main__":
     game = Game(name)
 
 while True:
-    ...
+    print(game.player.get_status())

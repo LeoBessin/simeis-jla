@@ -4,7 +4,6 @@ from utils import create_json
 class Player:
     def __init__(self, id=None, key=None, name=None, datalist=None):
         if datalist is not None:
-            # Initialize from existing object or dict
             self.id = getattr(datalist, "id", None)
             self.key = getattr(datalist, "key", None)
             self.name = getattr(datalist, "name", None)
