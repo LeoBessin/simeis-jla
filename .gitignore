@@ -5,3 +5,4 @@ result
 .~lock.*.ods#
 scores.json
 .env
+python/.idea

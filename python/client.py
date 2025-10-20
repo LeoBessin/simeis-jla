@@ -27,4 +27,6 @@ def get(path, **qry):
 
         return data
 
-print(get("/ping"))
+
+while True:
+    print(get("/ping"))
