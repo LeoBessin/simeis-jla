@@ -1,5 +1,5 @@
 PORT=8080
-URL=f"http://0.0.0.0:{PORT}"
+URL=f"http://127.0.0.1:{PORT}"
 # URL=f"http://103.45.247.164:{PORT}"
 
 import os
@@ -60,6 +60,14 @@ class Game:
         print("[*] Current status: {} credits, costs: {}, time left before lost: {} secs".format(
             round(status["money"], 2), round(status["costs"], 2), int(status["money"] / status["costs"]),
         ))
+
+
+    def info_player(self):
+        player = self.get("/player/{}".format(self.player["playerId"]))
+        
+        print("[*] Player info:")
+        return player
+
 
     # If we have a file containing the player ID and key, use it
     # If not, let's create a new player
@@ -290,6 +298,33 @@ class Game:
         self.ship_repair(self.sid)
         self.ship_refuel(self.sid)
 
+    def buy_cargo_upgrade(self):
+        # Montrer toutes les améliorations de cargo disponibles
+        player = game.info_player();
+        status = self.get(f"/player/{self.pid}")
+        self.sta = list(status["stations"].keys())[0]
+        station = self.get(f"/station/{self.sta}")
+        modules = self.get(f"/station/{self.sta}/shop/modules")
+        ship = self.get(f"/ship/{self.sid}")
+        upgrades = self.get(f'/station/{self.sta}/shipyard/upgrade/{self.sid}/{"CargoExpansion"}')
+
+
+        self.get(f'/station/{self.sta}/shop/cargo/buy/{"100"}')
+        print("capacity ship : ", ship['cargo']['capacity'])
+
+        print("argent : ", player['money'])
+        print("prix : ", modules['Miner'])
+        if(player['money'] < modules['Miner']):
+            print("Pas assez d'argent pour une amélioration de cargo.")
+            return
+        else:
+            print("module: ", modules)
+            print("station : ", station['id'])
+            print("ship : ", self.sid)
+            # t = self.get(f"/station/{station['id']}/shop/modules/{self.sid}/buy/{'Miner'}")
+            print("Achat d'une amélioration de cargo...")
+
+        
 if __name__ == "__main__":
     name = sys.argv[1]
     game = Game(name)
@@ -301,3 +336,8 @@ if __name__ == "__main__":
         game.go_mine()
         game.disp_status()
         game.go_sell()
+        game.info_player()
+        game.buy_cargo_upgrade()
+
+        #Acherter une amélioration de cargo
+
