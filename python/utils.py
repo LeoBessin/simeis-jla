@@ -1,3 +1,4 @@
+import urllib
 import urllib.request
 import json
 import os
@@ -8,6 +9,9 @@ load_dotenv()
 PORT=os.getenv('PORT')
 SERVER_URL=os.getenv('SERVER_URL')
 URL=f"http://{SERVER_URL}:{PORT}"
+
+class SimeisError(Exception):
+    pass
 
 def get(path, **qry):
         tail = ""
@@ -27,6 +31,13 @@ def get(path, **qry):
 
         return data
 
+def create_json(data, filename):
+    with open(f"./data/{filename}.json", "w") as f:
+        json.dump(data, f)
 
-while True:
-    print(get("/ping"))
+def read_json(filename):
+    try:
+        with open(f"./data/{filename}.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return None
