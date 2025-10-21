@@ -287,6 +287,8 @@ class Game:
                 unloaded["unloaded"], res, sold["added_money"]
             ))
 
+            
+
         self.ship_repair(self.sid)
         self.ship_refuel(self.sid)
 
