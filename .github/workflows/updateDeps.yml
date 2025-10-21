@@ -1,13 +1,49 @@
+name: Check dependencies
 on:
   schedule:
     - cron: '* * * * *'
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  test_schedule:
+  check-update:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Not on Monday or Wednesday
-        if: github.event.schedule != '* * * * *'
-        run: echo "This step will be skipped on Monday and Wednesday"
-      - name: Every time
-        run: echo "This step will always run"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Check for outdated dependencies
+        id: check
+        run: |
+          output=$(cargo update --dry-run 2>&1 | grep "Locking" || true)
+          echo "Output: $output"
+          if [ "$output" != "Locking 0 packages to latest compatible versions" ]; then
+            echo "update_needed=true" >> $GITHUB_OUTPUT
+          else
+            echo "update_needed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update Cargo dependencies and commit
+        if: steps.check.outputs.update_needed == 'true'
+        run: |
+          cargo update
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b cargo-update
+          git add Cargo.lock
+          git commit -m "chore: update Rust dependencies"
+
+      - name: Create Pull Request
+        if: steps.check.outputs.update_needed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: cargo-update
+          title: "chore: update Rust dependencies"
+          body: "This PR updates Cargo dependencies to their latest compatible versions."
+          commit-message: "chore: update Rust dependencies"
