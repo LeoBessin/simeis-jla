@@ -18,7 +18,7 @@ jobs:
 
     - name: Install cargo-tarpaulin
       run: cargo install cargo-tarpaulin
-      
+
     - name: Run cargo-tarpaulin
       id: tarpaulin
       run: cargo tarpaulin --fail-under 50
@@ -28,3 +28,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: steps.tarpaulin.conclusion == 'failure'
       run: gh pr edit ${{ github.event.pull_request.number }} --add-label "not enough tests"
+      
