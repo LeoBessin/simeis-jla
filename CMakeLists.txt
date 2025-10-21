@@ -14,7 +14,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CARGO_BUILD_FLAGS --release)
     set(CARGO_BUILD_DIR release)
 else()
-    set(CARGO_BUILD_FLAGS "")
+    set(CARGO_BUILD_FLAGS "-F heavy-testing")
     set(CARGO_BUILD_DIR debug)
 endif()
 
