@@ -7,7 +7,6 @@ edition = "2021"
 simeis-data = { path = "../simeis-data" }
 urlencoding = "2.1.3"
 ntex = { version = "2.11.0", features = ["compress", "tokio"] }
-tests= {path = "../tests"}
 
 base64 = { workspace = true }
 log = { workspace = true }
@@ -31,5 +30,5 @@ code-model = "kernel"
 
 [features]
 default = []
-heavy-testing = ["tests/execute"]
+heavy-testing = ["simeis-data/testing"]
 
