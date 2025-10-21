@@ -28,3 +28,6 @@ jobs:
     - name: Add label based on coverage
       if: ${{ steps.tarpaulin.outcome == 'failure' }}
       run: gh pr edit ${{ github.event.pull_request.number }} --add-label "not enough tests"
+      env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
