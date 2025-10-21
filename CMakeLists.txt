@@ -36,6 +36,8 @@ add_custom_target(cargo_test
     COMMENT "Running Cargo tests"
 )
 
+add_custom_target(doc ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf)
+
 enable_testing()
 add_test(NAME rust_tests
     COMMAND ${CARGO} test
