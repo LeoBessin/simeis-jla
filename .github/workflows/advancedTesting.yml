@@ -15,4 +15,4 @@ jobs:
          uses: dtolnay/rust-toolchain@stable
 
        - name: Run heavy tests
-         run: cargo test --tests --features heavy-testing
+         run: cargo test heavy-testing
