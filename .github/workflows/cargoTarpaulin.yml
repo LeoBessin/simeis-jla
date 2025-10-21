@@ -26,7 +26,5 @@ jobs:
       run: cargo tarpaulin --fail-under 50
 
     - name: Add label based on coverage
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: steps.tarpaulin.outcome == 'failure'
+      if: ${{ steps.tarpaulin.outcome == 'failure' }}
       run: gh pr edit ${{ github.event.pull_request.number }} --add-label "not enough tests"
