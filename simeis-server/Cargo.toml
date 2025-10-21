@@ -19,6 +19,7 @@ tokio = { workspace = true }
 
 [features]
 default = []
+heavy-testing = ["simeis-data/testing"]
 testing = ["simeis-data/testing"]
 
 [profile.release]
@@ -29,3 +30,4 @@ lto = "thin"
 panic = "abort"
 incremental = false
 codegen-units = 1
+
