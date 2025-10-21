@@ -1,0 +1,30 @@
+name: check cargo tarpaulin
+
+on:
+  pull_request:
+    types: [opened]
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install cargo-tarpaulin
+      run: cargo install cargo-tarpaulin
+      
+    - name: Run cargo-tarpaulin
+      id: tarpaulin
+      run: cargo tarpaulin --fail-under 50
+
+    - name: Add label based on coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: steps.tarpaulin.conclusion == 'failure'
+      run: gh pr edit ${{ github.event.pull_request.number }} --add-label "not enough tests"
