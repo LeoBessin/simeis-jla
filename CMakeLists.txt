@@ -36,6 +36,13 @@ add_custom_target(cargo_test
     COMMENT "Running Cargo tests"
 )
 
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf
+    COMMAND typst compile ${CMAKE_CURRENT_SOURCE_DIR}/doc/main.typ ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Building Typst documentation"
+)
+
 add_custom_target(doc ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf)
 
 enable_testing()
