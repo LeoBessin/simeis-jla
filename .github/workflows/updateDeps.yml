@@ -1,4 +1,8 @@
 name: Check dependencies
+
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '* * * * *'
