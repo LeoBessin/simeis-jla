@@ -59,7 +59,6 @@ install(PROGRAMS ${CMAKE_SOURCE_DIR}/target/${CARGO_BUILD_DIR}/simeis-server
     OPTIONAL
 )
 
-# Print configuration summary
 message(STATUS "CMake Build Type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Cargo found at: ${CARGO}")
 message(STATUS "Cargo build flags: ${CARGO_BUILD_FLAGS}")
