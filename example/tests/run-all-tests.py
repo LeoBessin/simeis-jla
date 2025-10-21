@@ -1,5 +1,5 @@
 from utils import create_property_based_test
-from example.tests.scenario_1 import create_player
+from scenario_1 import create_player
 from scenario_2 import buy_scenario
 from scenario_3 import check_Cargaison
 
