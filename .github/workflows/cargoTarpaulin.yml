@@ -28,5 +28,5 @@ jobs:
     - name: Add label based on coverage
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: steps.tarpaulin.conclusion == 'failure'
+      if: steps.tarpaulin.outcome == 'failure'
       run: gh pr edit ${{ github.event.pull_request.number }} --add-label "not enough tests"
