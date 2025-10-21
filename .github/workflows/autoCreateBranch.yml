@@ -1,32 +1,16 @@
-name: Auto Create Branch on Issue
+name: Auto Create Issue Branch
 
 on:
   issues:
     types: [opened]
-  workflow_dispatch:
 
 jobs:
-  create-branch:
+  create_issue_branch_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Create branch for new issue
+      - name: Create Issue Branch
+        with:
+          branchName: "${{ github.event.issue.label[0] }}-${{ github.event.issue.title }}"
+        uses: robvanderleek/create-issue-branch@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          ISSUE_NUMBER="${{ github.event.issue.number }}"
-          ISSUE_TYPE="${{ github.event.issue.labels[0].name }}" # assuming the first label is either 'bug' or 'feature'
-          BRANCH_NAME="${ISSUE_TYPE,,}/${ISSUE_NUMBER}-${ISSUE_TITLE// /-}"
-          
-          # Create a new branch from main
-          git checkout main
-          git pull origin main
-          git checkout -b "$BRANCH_NAME"
-          
-          # Push the new branch to the remote repository
-          git push origin "$BRANCH_NAME"
-          
-          echo "Created and pushed branch: $BRANCH_NAME"
