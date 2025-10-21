@@ -16,6 +16,6 @@ jobs:
       - name: Run server
         run: cargo run &
       - name: Run heavy tests - Scenario 1
-        run: python3 example/tests/run-all-tests.py
+        run: cd example/tests/ && python3 run-all-tests.py
       - name: Kill server
         run: pkill simeis
