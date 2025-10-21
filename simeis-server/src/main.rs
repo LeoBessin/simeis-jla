@@ -41,6 +41,9 @@ async fn main() -> std::io::Result<()> {
 
     game.stop(gamethread).await;
     res
+
+    let r =
+    
 }
 
 #[cfg(feature = "heavy_testing")]
