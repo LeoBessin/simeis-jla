@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Create Issue Branch
         with:
-          branchName: "${{ github.event.issue.label[0] }}-${{ github.event.issue.title }}"
+          branchName: '${{ github.event.issue.label[0] }}-${{ github.event.issue.title }}'
         uses: robvanderleek/create-issue-branch@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
