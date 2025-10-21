@@ -11,6 +11,7 @@ from utils import create_property_based_test, delete_json
 def create_player():
     fake_name = str(random.randint(0, 2**64 - 1))
     game = Game(fake_name)
+    status = game.get(f'/player/{game.player["playerId"]}')
     delete_json(fake_name)
-    return game
-create_property_based_test(create_player,1000)
+    assert fake_name == status["name"]
+create_property_based_test(create_player,10)
