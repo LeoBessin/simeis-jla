@@ -14,4 +14,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Run heavy tests - Scenario 1
-        run: python3 tests/run-all-tests.py
+        run: python3 example/tests/run-all-tests.py

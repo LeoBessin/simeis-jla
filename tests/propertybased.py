@@ -1,6 +1,5 @@
-import sys
 import random
-from utils import create_property_based_test
+from example.tests.utils import create_property_based_test
 
 
 ### Example
