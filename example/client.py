@@ -287,7 +287,9 @@ class Game:
                 unloaded["unloaded"], res, sold["added_money"]
             ))
 
-            
+            dnvsdkbvdjvbdsmkjvbndfwmkj<dsbnvkdsbvd<mkjb<vsvsvxvdv< v<bdvlj<dbvdljh<v<
+            ejzb fdezkjnbszefbemjkeqnfmqesbfjem<sfdmsfezsbfesdbfdsqkmjcbdsmwdbnsfrsbfes je bz léo dzhndjomezbzeijeqszdibezsfbesdfceszdbcqs
+            vdfcvwbhrswdfshvd dfhvbdsb vv hbfdbvsdbkv vouds vksbvk
 
         self.ship_repair(self.sid)
         self.ship_refuel(self.sid)
