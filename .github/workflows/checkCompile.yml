@@ -1,0 +1,22 @@
+name: Check Compile
+on: 
+  pull_request:
+    branches: [ "**" ]
+    types: [opened, reopened]
+env:
+  BUILD_TYPE: Release
+jobs:
+  check-compile:
+    runs-on: ubuntu-latest
+
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Cargo check
+          run: cargo check
+
+        - name: Install Typst CLI
+          run: cargo fmt --check
+
+        - name: check schematic
+          run: cargo clippy
