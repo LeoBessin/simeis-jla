@@ -36,9 +36,12 @@ add_custom_target(cargo_test
     COMMENT "Running Cargo tests"
 )
 
+set(TYPST_INPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/manual.typ)
+set(TYPST_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf)
+
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf
-    COMMAND typst compile ${CMAKE_CURRENT_SOURCE_DIR}/doc/main.typ ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf
+    COMMAND typst compile ${CMAKE_CURRENT_SOURCE_DIR}/doc/manual.typ ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Building Typst documentation"
 )
