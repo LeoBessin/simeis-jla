@@ -2,10 +2,11 @@ name: Check dependencies
 
 permissions:
   contents: write
+  pull-requests: write
 
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '0 0 * * 0'  # Run weekly on Sunday at midnight
   push:
     branches: [ "main" ]
   workflow_dispatch:
@@ -24,24 +25,17 @@ jobs:
       - name: Check for outdated dependencies
         id: check
         run: |
-          output=$(cargo update --dry-run 2>&1 | grep "Locking" || true)
-          echo "Output: $output"
-          if [ "$output" != "Locking 0 packages to latest compatible versions" ]; then
+          output=$(cargo update --dry-run 2>&1)
+          echo "$output"
+          if echo "$output" | grep -q "Updating"; then
             echo "update_needed=true" >> $GITHUB_OUTPUT
           else
             echo "update_needed=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Update Cargo dependencies and commit
+      - name: Update Cargo dependencies
         if: steps.check.outputs.update_needed == 'true'
-        run: |
-          git checkout -b cargo-update-${{ github.run_id }}
-          cargo update
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Cargo.lock
-          git commit -m "chore: update Rust dependencies"
-          git push origin HEAD
+        run: cargo update
 
       - name: Create Pull Request
         if: steps.check.outputs.update_needed == 'true'
@@ -52,3 +46,5 @@ jobs:
           title: "chore: update Rust dependencies"
           body: "This PR updates Cargo dependencies to their latest compatible versions."
           commit-message: "chore: update Rust dependencies"
+          add-paths: |
+            Cargo.lock
