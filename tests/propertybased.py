@@ -1,22 +1,6 @@
 import sys
 import random
-
-NB_ITERATIONS_TESTS = 100000
-
-def create_property_based_test(f):
-    regressions = [ ]
-    for i in range(0, NB_ITERATIONS_TESTS):
-        if i < len(regressions):
-            seed = regressions[i]
-        else:
-            seed = random.randrange(0, 2**64)
-        random.seed(seed)
-        try:
-            f()
-        except AssertionError as err:
-            print(seed, "test failed")
-            print(err)
-            sys.exit(1)
+from utils import create_property_based_test
 
 
 ### Example

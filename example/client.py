@@ -1,6 +1,7 @@
 PORT=8080
 URL=f"http://0.0.0.0:{PORT}"
 # URL=f"http://103.45.247.164:{PORT}"
+# URL="https://simeis.leo-bessin.dev"
 
 import os
 import sys
