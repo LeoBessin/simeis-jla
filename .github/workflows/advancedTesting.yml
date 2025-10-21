@@ -1,3 +1,5 @@
+name: Advanced Testing on Merged req to Release/*
+
 on:
   pull_request:
     types: ["closed"]
@@ -15,5 +17,5 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Run all tests
-        run: cargo test
+        run: cargo test heavy-testing
   
