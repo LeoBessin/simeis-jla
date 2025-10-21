@@ -1,8 +1,8 @@
-name: Summarize new issues
+name: Auto Create Branch on Issue
 
 on:
   issues:
-    types: [bug,feature]
+    types: [opened]
   workflow_dispatch:
 
 jobs:
