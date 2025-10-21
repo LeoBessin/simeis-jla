@@ -1,4 +1,4 @@
-from tests.utils import create_property_based_test
+from utils import create_property_based_test
 from tests.scenario_1 import create_player
 from tests.scenario_2 import buy_scenario
 from tests.scenario_3 import check_Cargaison
