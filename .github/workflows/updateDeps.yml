@@ -31,19 +31,20 @@ jobs:
       - name: Update Cargo dependencies and commit
         if: steps.check.outputs.update_needed == 'true'
         run: |
+          git checkout -b cargo-update-${{ github.run_id }}
           cargo update
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b cargo-update
           git add Cargo.lock
           git commit -m "chore: update Rust dependencies"
+          git push origin HEAD
 
       - name: Create Pull Request
         if: steps.check.outputs.update_needed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: cargo-update
+          branch: cargo-update-${{ github.run_id }}
           title: "chore: update Rust dependencies"
           body: "This PR updates Cargo dependencies to their latest compatible versions."
           commit-message: "chore: update Rust dependencies"
