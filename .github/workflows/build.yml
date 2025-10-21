@@ -1,7 +1,7 @@
 name: Build using Cmake
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "**" ]
 env:
   BUILD_TYPE: Release
 jobs:
