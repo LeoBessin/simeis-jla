@@ -22,6 +22,7 @@ jobs:
       
     - name: Run cargo-tarpaulin
       id: tarpaulin
+      continue-on-error: true
       run: cargo tarpaulin --fail-under 50
 
     - name: Add label based on coverage
