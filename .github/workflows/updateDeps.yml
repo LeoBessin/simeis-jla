@@ -44,5 +44,6 @@ jobs:
           title: "chore: update Rust dependencies"
           body: "This PR updates Cargo dependencies to their latest compatible versions."
           commit-message: "chore: update Rust dependencies"
+          labels: "bot/update"
           add-paths: |
             Cargo.lock
