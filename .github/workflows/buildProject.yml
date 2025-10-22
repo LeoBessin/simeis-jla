@@ -24,6 +24,8 @@ jobs:
             path: |
              target/debug
              target/release
+             ~/.cargo/registry
+             ~/.cargo/git
             key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - if: ${{ steps.cache-deps.outputs.cache-hit != 'true' }}
