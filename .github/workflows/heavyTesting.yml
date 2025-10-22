@@ -14,4 +14,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Run server
-        run: cargo run > /dev/null 2>&1 && sleep 10 && cd example/tests/ && python3 run-all-tests.py && pkill simeis
+        run: cargo run > /dev/null 2>&1 & sleep 10 && cd example/tests/ && python3 run-all-tests.py && pkill simeis
