@@ -19,8 +19,7 @@ jobs:
           cache-name: cache-deps
         with:
             path: |
-             target/debug
-             target/release
+             target
              ~/.cargo/registry
              ~/.cargo/git
             key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
