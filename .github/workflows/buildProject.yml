@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Typst CLI
-        run: cargo install typst-cli
-
       - name: Cache Gradle packages
         id: cache-deps
         continue-on-error: true
@@ -27,7 +24,11 @@ jobs:
              ~/.cargo/registry
              ~/.cargo/git
             key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Install Typst CLI
+        run: cargo install typst-cli
 
+      
       - if: ${{ steps.cache-deps.outputs.cache-hit != 'true' }}
         name: Build dependencies
         run: echo "building dependencies"
