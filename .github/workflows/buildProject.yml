@@ -21,7 +21,7 @@ jobs:
         env:
           cache-name: cache-deps
         with:
-            path: /.target/debug/deps
+            path: target/debug
             key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - if: ${{ steps.cache-deps.outputs.cache-hit != 'true' }}
