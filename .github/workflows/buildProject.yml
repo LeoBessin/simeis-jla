@@ -20,8 +20,7 @@ jobs:
         with:
             path: |
              target
-             ~/.cargo/registry
-             ~/.cargo/git
+             ~/.cargo
             key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       
       - name: Install Typst CLI
