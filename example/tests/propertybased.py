@@ -1,5 +1,10 @@
 import random
-from example.tests.utils import create_property_based_test
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from tests.utils import create_property_based_test
 
 
 ### Example
