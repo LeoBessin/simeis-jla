@@ -5,28 +5,28 @@ on:
     types: [opened, reopened]
 env:
   BUILD_TYPE: Release
-jobs:
-  checkout:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-    
+jobs:    
   check-Cargo:
-    needs: checkout
     runs-on: ubuntu-latest
     steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          
         - name: Cargo check
           run: cargo check
   install-CLI:
-    needs: checkout
     runs-on: ubuntu-latest
     steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
         - name: Install Typst CLI
           run: cargo fmt --check
   check-schematic:
-    needs: checkout
     runs-on: ubuntu-latest
     steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
         - name: check schematic
           run: cargo clippy
