@@ -46,9 +46,8 @@ jobs:
             {
               "template": "#{{CHANGELOG}}\n\n<details><summary>Uncategorized</summary>\n#{{UNCATEGORIZED}}\n</details>",
               "categories": [
-                { "title": "## 🚀 Features", "labels": ["feature", "feat"] },
-                { "title": "## 🐛 Fixes",    "labels": ["fix", "bug"] },
-                { "title": "## 📦 Deps",     "labels": ["dependencies"] }
+                { "title": "##  Features", "labels": ["feature", "feat"] },
+                { "title": "##  Fixes",    "labels": ["fix", "bug"] },
               ]
             }
         env:
