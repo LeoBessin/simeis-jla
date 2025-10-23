@@ -1,0 +1,17 @@
+name: Heavy testing
+
+on:
+  pull_request:
+    types: ["closed"]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  heavy-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run server
+        run: cargo run > /dev/null 2>&1 & sleep 60 && cd example/tests/ && python3 run-all-tests.py && pkill simeis

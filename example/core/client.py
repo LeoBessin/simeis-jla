@@ -1,6 +1,7 @@
 PORT=8080
 URL=f"http://127.0.0.1:{PORT}"
 # URL=f"http://103.45.247.164:{PORT}"
+# URL="https://simeis.leo-bessin.dev"
 
 import os
 import sys
@@ -294,6 +295,8 @@ class Game:
             print("[*] Unloaded and sold {} of {}, for {} credits".format(
                 unloaded["unloaded"], res, sold["added_money"]
             ))
+
+            
 
         self.ship_repair(self.sid)
         self.ship_refuel(self.sid)

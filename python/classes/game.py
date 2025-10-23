@@ -9,15 +9,24 @@ class Game:
         self.player = None
         self.initialize(player_name)
         self.threads = [
-            {
-                "target": self.server_status_thread,
-                "delay": 5
-            },
+            # {
+            #     "target": self.server_status_thread,
+            #     "delay": 5
+            # },
             {
                 "target": self.update_player_thread,
                 "delay": 10,
-            }
+            },
         ]
+
+    def buy_ship(self, station_id, ship_id):
+        err = get(f"/station/{station_id}/shipyard/buy/{ship_id}")
+        if err:
+            print(err)
+            return False
+        else:
+            return True
+
 
     def update_player_thread(self, delay):
         while True:
@@ -26,6 +35,14 @@ class Game:
                 log("Player updated")
                 log(self.player.get_status())
             time.sleep(delay)
+
+    def buy_ship(self):
+        station_ids = self.player.stations.keys()
+        first_station_id = list(station_ids)[0]
+        if first_station_id is not None:
+            ships = get(f"/station/{first_station_id}/shipyard/list")
+            print(ships)
+
 
     def get_server_status(self):
         server_status = get("/ping")

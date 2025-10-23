@@ -1,5 +1,24 @@
-import sys
 import random
+import sys
+import time
+from pathlib import Path
+
+def delete_json(id):
+    path = Path(f"{id}.json")
+    path.unlink()
+
+def run_test(f):
+    start = time.time()
+    try:
+        f()
+    except AssertionError as err:
+        print(seed, "test failed")
+        print(err)
+        sys.exit(1)
+    finally:
+        end = time.time()
+        delta = end - start
+        print(f"Test runs in {delta} seconds")
 
 NB_ITERATIONS_TESTS = 100000
 
@@ -17,14 +36,3 @@ def create_property_based_test(f):
             print(seed, "test failed")
             print(err)
             sys.exit(1)
-
-
-### Example
-
-def addition():
-    x = random.randrange(0, 10000)
-    y = random.randrange(0, 10000)
-    assert x + y > x
-    assert x + y > y
-
-create_property_based_test(addition)

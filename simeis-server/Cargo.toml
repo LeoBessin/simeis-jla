@@ -17,10 +17,6 @@ serde_json = { workspace = true }
 strum = { workspace = true }
 tokio = { workspace = true }
 
-[features]
-default = []
-testing = ["simeis-data/testing"]
-
 [profile.release]
 opt-level = 3
 strip = "symbols"
@@ -29,3 +25,10 @@ lto = "thin"
 panic = "abort"
 incremental = false
 codegen-units = 1
+code-model = "kernel"
+
+
+[features]
+default = []
+heavy-testing = ["simeis-data/testing"]
+

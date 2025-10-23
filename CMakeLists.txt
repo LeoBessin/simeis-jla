@@ -14,7 +14,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CARGO_BUILD_FLAGS --release)
     set(CARGO_BUILD_DIR release)
 else()
-    set(CARGO_BUILD_FLAGS "")
+    set(CARGO_BUILD_FLAGS "-F heavy-testing")
     set(CARGO_BUILD_DIR debug)
 endif()
 
@@ -30,13 +30,35 @@ add_custom_target(cargo_clean
     COMMENT "Cleaning Cargo build artifacts"
 )
 
+add_custom_target(cargo_test
+    COMMAND ${CARGO} test
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Running Cargo tests"
+)
+
+set(TYPST_INPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/manual.typ)
+set(TYPST_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf)
+
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf
+    COMMAND typst compile ${CMAKE_CURRENT_SOURCE_DIR}/doc/manual.typ ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Building Typst documentation"
+)
+
+add_custom_target(doc ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/output.pdf)
+
+enable_testing()
+add_test(NAME rust_tests
+    COMMAND ${CARGO} test
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 install(PROGRAMS ${CMAKE_SOURCE_DIR}/target/${CARGO_BUILD_DIR}/simeis-server
     DESTINATION bin
     OPTIONAL
 )
 
-# Print configuration summary
 message(STATUS "CMake Build Type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Cargo found at: ${CARGO}")
 message(STATUS "Cargo build flags: ${CARGO_BUILD_FLAGS}")
-
