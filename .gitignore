@@ -8,4 +8,4 @@ python/.env
 python/.idea
 python/data
 build
-doc/output.pdf
+.env
