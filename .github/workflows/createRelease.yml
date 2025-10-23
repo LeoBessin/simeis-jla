@@ -5,14 +5,40 @@ on:
       - "release/**"
   workflow_dispatch:
 
+env:
+  BUILD_TYPE: Debug
+
 jobs:
   main:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Aquire code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
+      - name: Cache Gradle packages
+        id: cache-deps
+        continue-on-error: true
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-deps
         with:
-          fetch-depth: 0
+          path: |
+            target
+            ~/.cargo
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install Typst CLI
+        run: cargo install typst-cli
+
+
+      - if: ${{ steps.cache-deps.outputs.cache-hit != 'true' }}
+        name: Build dependencies
+        run: echo "building dependencies"
+
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Generate changelog from merged PRs
         id: changelog
