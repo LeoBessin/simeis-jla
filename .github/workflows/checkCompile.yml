@@ -6,17 +6,27 @@ on:
 env:
   BUILD_TYPE: Release
 jobs:
-  check-compile:
+  checkout:
     runs-on: ubuntu-latest
-
     steps:
-        - uses: actions/checkout@v4
-
+      - name: Checkout
+        uses: actions/checkout@v4
+    
+  check-Cargo:
+    needs: checkout
+    runs-on: ubuntu-latest
+    steps:
         - name: Cargo check
           run: cargo check
-
+  install-CLI:
+    needs: checkout
+    runs-on: ubuntu-latest
+    steps:
         - name: Install Typst CLI
           run: cargo fmt --check
-
+  check-schematic:
+    needs: checkout
+    runs-on: ubuntu-latest
+    steps:
         - name: check schematic
           run: cargo clippy
