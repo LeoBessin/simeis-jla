@@ -30,3 +30,4 @@ jobs:
     steps:
         - name: check schematic
           run: cargo clippy
+          
