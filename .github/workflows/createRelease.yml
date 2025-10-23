@@ -39,6 +39,22 @@ jobs:
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
+      - name: Build Changelog
+        uses: mikepenz/release-changelog-builder-action@v5
+        with:
+          configurationJson: |
+            {
+              "template": "#{{CHANGELOG}}\n\n<details><summary>Uncategorized</summary>\n#{{UNCATEGORIZED}}\n</details>",
+              "categories": [
+                { "title": "##  Features", "labels": ["feature", "feat"] },
+                { "title": "##  Fixes",    "labels": ["fix", "bug"] },
+              ]
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          
+
       - name: Release the new binaries
         uses: docker://ghcr.io/mini-bomba/create-github-release:v1.2.0
         with:
@@ -54,5 +70,4 @@ jobs:
           files: |
             target/release/simeis-server
             doc/output.pdf
-            simeis-server.tar
           clear_attachments: true
