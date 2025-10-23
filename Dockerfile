@@ -8,7 +8,7 @@ COPY simeis-server ./simeis-server
 
 RUN cargo build --release --bin simeis-server
 
-FROM debian:bullseye-slim
+FROM ubuntu:latest
 
 WORKDIR /app
 
