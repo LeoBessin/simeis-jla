@@ -54,4 +54,5 @@ jobs:
           files: |
             target/release/simeis-server
             doc/output.pdf
+            simeis-server.tar
           clear_attachments: true
