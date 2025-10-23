@@ -40,7 +40,7 @@ jobs:
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Docker Build & Save
-        run: docker build -t litchipi/simeis-server-jla . && docker image save simeis-server > simeis-server.tar
+        run: docker build -t litchipi/simeis-server-jla . && docker image save simeis-server-jla > simeis-server.tar
 
       - name: Docker Login
         run: echo "${{ secrets.GH_SECRET_KEY }}" | docker login -u litchipi --password-stdin
