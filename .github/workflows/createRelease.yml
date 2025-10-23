@@ -22,7 +22,6 @@ jobs:
           cache-name: cache-deps
         with:
           path: |
-            target
             ~/.cargo
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
@@ -44,7 +43,7 @@ jobs:
         id: changelog
         run: |
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
-          echo "## 🚀 Changes" >> $GITHUB_ENV
+          echo "## Changes" >> $GITHUB_ENV
           git log --oneline --merges --first-parent origin/main..HEAD | \
             grep -oP "Merge pull request #\K\d+" | \
             while read pr; do
@@ -62,7 +61,7 @@ jobs:
           tag: "latest"
           name: "Latest Commit, that compiles"
           body: |
-            [Github Actions workflow run that built this prerelease](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
             ${{ env.CHANGELOG }}
 
