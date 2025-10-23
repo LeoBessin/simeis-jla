@@ -60,7 +60,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: "latest"
-          prerelease: true
           name: "Latest Commit, that compiles"
           body: |
             [Github Actions workflow run that built this prerelease](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
