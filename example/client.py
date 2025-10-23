@@ -10,6 +10,7 @@ import json
 import string
 import urllib.request
 
+
 class SimeisError(Exception):
     pass
 
