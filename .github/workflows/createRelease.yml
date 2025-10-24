@@ -10,7 +10,7 @@ env:
 
 jobs:
   main:
-    runs-on: debian-bookworm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
