@@ -12,14 +12,12 @@ ExecStart=/usr/bin/simeis-server-jla
 Restart=on-failure
 RestartSec=5s
 
-# Sécurité
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
 ReadWritePaths=/var/log/simeis /var/lib/simeis
 
-# Logging
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=simeis-server-jla
