@@ -53,6 +53,11 @@ jobs:
 
       - name: Release the new binaries
         uses: docker://ghcr.io/mini-bomba/create-github-release:v1.2.0
+
+      - name: Upload deb to VM
+        run: echo "${{ secrets.PRIVATE_KEY }}" > private-key && scp -P 22222 -i private-key simeis-server-jla.1-1_all.deb leo@78.123.114.124:/home/student/
+
+
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: "latest"
