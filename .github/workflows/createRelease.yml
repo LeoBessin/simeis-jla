@@ -39,30 +39,15 @@ jobs:
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-      - name: Docker Build & Save
-        run: docker build -t simeis-server . && docker image save simeis-server > simeis-server.tar
-
-      - name: Docker Login
-        run: echo "${{ secrets.GH_SECRET_KEY }}" | docker login -u litchipi --password-stdin
-
-      - name: Docker push
-        run: docker build -t litchipi/simeis-server-jla . && docker push litchipi/simeis-server-jla
-
-      - name: Create debian pkg
-        run: mkdir -p ./debian/usr/bin && cp target/release/simeis-server ./debian/usr/bin && mkdir -p debian/DEBIAN && find ./debian -type d | xargs chmod 755 && cp control debian/DEBIAN && dpkg-deb --build debian && mv debian.deb simeis-server-jla.1-1_all.deb
-
-      - name: Upload deb to VM
+      - name: Aquire code
+        if: always()
+        uses: actions/checkout@v2
+      - name: Put commit hash/name in env variables
         run: |
-          echo "${{ secrets.PRIVATE_KEY }}" > private_key
-          chmod 600 private_key
-          scp -P 22222 \
-              -q \
-              -i ./private_key \
-              -o StrictHostKeyChecking=no \
-              -o UserKnownHostsFile=/dev/null \
-              ./simeis-server-jla.1-1_all.deb \
-              leo@78.123.114.124:/home/student/
-          rm -f private_key
+          echo "GIT_HASH=$(git rev-parse --short=8 HEAD)" >> $GITHUB_ENV
+          echo "GIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          git log -1 --pretty=%B >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Release the new binaries
         uses: docker://ghcr.io/mini-bomba/create-github-release:v1.2.0
@@ -79,6 +64,4 @@ jobs:
           files: |
             target/release/simeis-server
             doc/output.pdf
-            simeis-server.tar
-            simeis-server-jla.1-1_all.deb
           clear_attachments: true
