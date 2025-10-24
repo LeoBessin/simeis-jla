@@ -3,6 +3,6 @@ Version: 1.1-1
 Section: base
 Priority: optional
 Architecture: all
-Depends: cmatrix (>= 2.0-6)
+Depends: cmatrix (>= 2.0-3)
 Maintainer: B. Leo <leo.bessin@supdevinci-edu.fr>
 Description: Simeis server of JLA
