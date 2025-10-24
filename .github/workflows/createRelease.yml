@@ -56,6 +56,7 @@ jobs:
           mkdir -p debian/usr/share/man/man1
           mkdir -p debian/etc/systemd/system
           mkdir -p debian/DEBIAN
+          cp ./debian/control debian/DEBIAN/
           cp ./target/release/simeis-server ./debian/usr/bin
           chmod 755 ./debian/usr/bin/simeis-server
           cp ./debian/simeis-server-jla.1 ./debian/usr/share/man/man1/
