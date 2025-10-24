@@ -61,7 +61,7 @@ jobs:
           cp ./debian/simeis-server-jla.1 ./debian/usr/share/man/man1/
           gzip -9 ./debian/usr/share/man/man1/simeis-server-jla.1
           cp ./debian/simeis-server-jla.service debian/etc/systemd/system/
-          chmod 644 debian/etc/systemd/system/simeis-server.service
+          chmod 644 debian/etc/systemd/system/simeis-server-jla.service
           cp ./debian/postinst debian/DEBIAN/
           chmod 755 debian/DEBIAN/postinst
           find debian -type d -exec chmod 755 {} \;
