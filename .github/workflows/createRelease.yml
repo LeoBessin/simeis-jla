@@ -52,11 +52,11 @@ jobs:
         run: mkdir -p ./debian/usr/bin && cp target/release/simeis-server ./debian/usr/bin && mkdir -p debian/DEBIAN && find ./debian -type d | xargs chmod 755 && cp control debian/DEBIAN && dpkg-deb --build debian && mv debian.deb simeis-server-jla.1-1_all.deb
 
       - name: Upload deb to VM
+        continue-on-error: true
         run: |
           echo "${{ secrets.PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           scp -P 22222 \
-              -q \
               -i ./private_key \
               -o StrictHostKeyChecking=no \
               -o UserKnownHostsFile=/dev/null \
