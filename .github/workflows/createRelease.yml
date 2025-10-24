@@ -56,8 +56,6 @@ jobs:
 
       - name: Release the new binaries
         uses: docker://ghcr.io/mini-bomba/create-github-release:v1.2.0
-
-
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: "latest"
