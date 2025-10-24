@@ -56,6 +56,7 @@ jobs:
           echo "${{ secrets.PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           scp -P 22222 \
+              -q \
               -i ./private_key \
               -o StrictHostKeyChecking=no \
               -o UserKnownHostsFile=/dev/null \
