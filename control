@@ -1,0 +1,8 @@
+Package: simeis-server-jla
+Version: 1.1-1
+Section: base
+Priority: optional
+Architecture: all
+Depends: cmatrix (>= 2.0-6)
+Maintainer: B. Leo <leo.bessin@supdevinci-edu.fr>
+Description: Simeis server of JLA
