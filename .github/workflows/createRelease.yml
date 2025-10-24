@@ -51,11 +51,11 @@ jobs:
       - name: Create debian pkg
         run: mkdir -p ./debian/usr/bin && cp target/release/simeis-server ./debian/usr/bin && mkdir -p debian/DEBIAN && find ./debian -type d | xargs chmod 755 && cp control debian/DEBIAN && dpkg-deb --build debian && mv debian.deb simeis-server-jla.1-1_all.deb
 
-      - name: Release the new binaries
-        uses: docker://ghcr.io/mini-bomba/create-github-release:v1.2.0
-
       - name: Upload deb to VM
         run: echo "${{ secrets.PRIVATE_KEY }}" > private-key && scp -P 22222 -i private-key simeis-server-jla.1-1_all.deb leo@78.123.114.124:/home/student/
+
+      - name: Release the new binaries
+        uses: docker://ghcr.io/mini-bomba/create-github-release:v1.2.0
 
 
         with:
