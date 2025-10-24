@@ -46,10 +46,31 @@ jobs:
         run: echo "${{ secrets.GH_SECRET_KEY }}" | docker login -u litchipi --password-stdin
 
       - name: Docker push
-        run: docker build -t litchipi/simeis-server-jla . && docker push litchipi/simeis-server-jla
+        run: |
+          docker build -t litchipi/simeis-server-jla . 
+          docker push litchipi/simeis-server-jla
 
       - name: Create debian pkg
-        run: mkdir -p ./debian/usr/bin && cp target/release/simeis-server ./debian/usr/bin && mkdir -p debian/DEBIAN && find ./debian -type d | xargs chmod 755 && cp control debian/DEBIAN && dpkg-deb --build debian && mv debian.deb simeis-server-jla.1-1_all.deb
+        run: |
+          mkdir -p debian/usr/bin
+          mkdir -p debian/usr/share/man/man1
+          mkdir -p debian/etc/systemd/system
+          mkdir -p debian/DEBIAN
+          cp target/release/simeis-server ./debian/usr/bin
+          chmod 755 ./debian/usr/bin/simeis-server
+          cp simeis-server-jla.1 ./debian/usr/share/man/man1/
+          gzip -9 ./debian/usr/share/man/man1/simeis-server-jla.1
+          cp simeis-server.service debian/etc/systemd/system/
+          chmod 644 debian/etc/systemd/system/simeis-server.service
+          cp postinst debian/DEBIAN/
+          cp prerm debian/DEBIAN/
+          cp postrm debian/DEBIAN/
+          chmod 755 debian/DEBIAN/postinst
+          chmod 755 debian/DEBIAN/prerm
+          chmod 755 debian/DEBIAN/postrm
+          find debian -type d -exec chmod 755 {} \;
+          dpkg-deb --build debian
+          mv debian.deb simeis-server-jla.1-1_all.deb
 
       - name: Upload deb to VM
         continue-on-error: true

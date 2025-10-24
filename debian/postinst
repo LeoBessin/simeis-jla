@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+case "$1" in
+    configure)
+        if ! id -u simeis >/dev/null 2>&1; then
+            useradd --system \
+                    --no-create-home \
+                    --home-dir /nonexistent \
+                    --shell /usr/sbin/nologin \
+                    simeis
+            echo "User created"
+        fi
+
+        mkdir -p /var/log/simeis
+        mkdir -p /var/lib/simeis
+        chown -R simeis:simeis /var/log/simeis /var/lib/simeis
+        chmod 755 /var/log/simeis /var/lib/simeis
+
+        if [ -d /run/systemd/system ]; then
+            systemctl daemon-reload
+            systemctl enable simeis-server-jla.service
+            systemctl start simeis-server-jla.service
+            echo "Service added & started"
+        fi
+        ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

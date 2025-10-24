@@ -1,0 +1,28 @@
+[Unit]
+Description=Simeis Server
+Documentation=man:simeis-server-jla(1)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=simeis
+Group=simeis
+ExecStart=/usr/bin/simeis-server-jla
+Restart=on-failure
+RestartSec=5s
+
+# Sécurité
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/simeis /var/lib/simeis
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=simeis-server-jla
+
+[Install]
+WantedBy=multi-user.target
